@@ -1,0 +1,13 @@
+[package]
+name = "rust-sqlx"
+Authors = ["John Basrai"]
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+tokio = { version = "1.32", features = ["full"] }
+sqlx = { version = "0.7", features = ["runtime-tokio-rustls", "postgres", "macros"] }
+serde = { version = "1.0", features = ["derive"] }
+rand = "0.8"
