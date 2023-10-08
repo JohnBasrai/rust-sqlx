@@ -1,18 +1,18 @@
 # rust-sqlx
-Example of rust-sqlx/postgres usage with database enum types. There are not many examples of how to
-use rust-sqlx with PostgreSQL to insert/update PostgreSQL ENUM columns, so I wrote one myself.
+Example of how to insert and update a record with an enum column using _rust-sqlx/postgresql_. I could not find any examples of how to
+do the update operation, so I wrote one myself.
 
 ***
 ## Running
-Before running this code codes against PostgreSQL (other database supported by sqlx should also work
+Before running this demo against PostgreSQL (other databases supported by sqlx should also work
 with changes) we need to start an instance of PostgreSQL.  The quickest way to do that to use an
-offical Docker container image. For more information, please see [docker-compose.yml](https://turreta.com/blog/2019/09/09/docker-compose-yml-for-mysql/).
+official Docker container image. For more information, please see [docker-compose.yml](https://turreta.com/blog/2019/09/09/docker-compose-yml-for-mysql/).
 
 ```
 docker run --rm --network=host --name=postgres -e POSTGRES_PASSWORD=welcome -e POSTGRES_USER=postgres postgres
 ```
 
-From another shell window, exec into the container to create the test table
+From another shell window, exec into the database container to create the test table. When I figure out how to do this with _sql_migrate_ I may update this demo to use it instead of these manual steps.
 ```
 docker exec -it postgres psql --username=postgres
 postgres# create type user_role as enum ('admin', 'user');
@@ -28,7 +28,7 @@ postgres# \q
 
 ```
  $ export DATABASE_URL=postgres://postgres@localhost:5432/postgres
- $ env DATABASE_URL=postgres://postgres@localhost:5432/postgres cargo run
+ $ cargo run
 warning: unused manifest key: package.Authors
     Finished dev [unoptimized + debuginfo] target(s) in 0.08s
      Running `target/debug/rust-sqlx`
