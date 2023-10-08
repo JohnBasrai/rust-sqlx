@@ -1,6 +1,5 @@
 # rust-sqlx
-Example of how to insert and update a record with an enum column using _rust-sqlx/postgresql_. I could not find any examples of how to
-do the update operation, so I wrote one myself.
+Example of how to insert and update a record with an enum column using _rust-sqlx/postgresql_. I could not find any examples of how to do the update operation (to an enum), but I found bits and pieces which I pulled together to write this demo.  Hopefully it will save someone else some grief.
 
 ***
 ## Running
