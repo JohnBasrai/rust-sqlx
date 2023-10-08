@@ -50,4 +50,5 @@ warning: unused manifest key: package.Authors
 [User { id: 1, name: "Attila the long dead Hun:1", role: User }]
 ```
 
-That's it. If run again you will more rows added to the table. When the row count is greater than 10 it will start delete 1 row for each row added.
+That's it.  If you run again you will see more rows added to the table. When the row count is
+greater than 10 it will delete 1 row for each row added.
