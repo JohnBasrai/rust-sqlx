@@ -11,20 +11,11 @@ official Docker container image. For more information, please see [docker-compos
 docker run --rm --network=host --name=postgres -e POSTGRES_PASSWORD=welcome -e POSTGRES_USER=postgres postgres
 ```
 
-From another shell window, exec into the database container to create the test table. When I figure out how to do this with _sql_migrate_ I may update this demo to use it instead of these manual steps.
+From another shell window, exec into the database container to create the test table.
 ```
-docker exec -it postgres psql --username=postgres
-postgres# create type user_role as enum ('admin', 'user');
-CREATE TYPE
-postgres# CREATE TABLE IF NOT EXISTS users (
-        id        bigserial PRIMARY KEY,
-        name      text      NOT NULL UNIQUE,
-        role      user_role NOT NULL
-    );
-CREATE TABLE
-postgres# \q
+docker exec -i postgres psql --username=postgres < db-init.sql
 ```
-
+Then build and run the code.
 ```
  $ export DATABASE_URL=postgres://postgres@localhost:5432/postgres
  $ cargo run
