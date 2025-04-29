@@ -1,28 +1,48 @@
 # rust-sqlx
-Async PostgreSQL database access in Rust using SQLx and Tokio.<br>
-Example of how to insert and update a record with an enum column using _rust-sqlx/postgresql_. I could not find any examples of how to do the update operation (to an enum), but I found bits and pieces which I pulled together to write this demo.  Hopefully it will save someone else some grief.
+
+Async PostgreSQL database access in Rust using SQLx and Tokio.  This project demonstrates
+how to insert and update PostgreSQL enum columns using Rust enums and `sqlx`.
+
+At the time of writing, clear examples for updating enum fields were hard to find. This
+demo pulls together the correct patterns in a working example. Hopefully it saves others
+some time and frustration.
 
 ***
+
 ## Running
-Before running this demo against PostgreSQL (other databases supported by sqlx should also work
-with changes) we need to start an instance of PostgreSQL.  The quickest way to do that to use an
-official Docker container image. For more information, please see [docker-compose.yml](https://turreta.com/blog/2019/09/09/docker-compose-yml-for-mysql/).
 
-```
-docker run --rm --network=host --name=postgres -e POSTGRES_PASSWORD=welcome -e POSTGRES_USER=postgres postgres
+Before running this demo with PostgreSQL (the primary target database), you'll need to
+start a local PostgreSQL instance.
+
+The quickest way is to use the official Docker container image:
+
+```bash
+docker run --rm --network=host --name=postgres \
+  -e POSTGRES_PASSWORD=welcome \
+  -e POSTGRES_USER=postgres \
+  -p 5432:5432 \
+  postgres
 ```
 
-From another shell window, exec into the database container to create the test table.
-```
+Then, from another shell window, exec into the database container and initialize the schema:
+
+```bash
 docker exec -i postgres psql --username=postgres < db-init.sql
 ```
-Then build and run the code.
+
+Set the `DATABASE_URL` environment variable and run the application:
+
+```bash
+export DATABASE_URL=postgres://postgres@localhost:5432/postgres
+cargo run
 ```
- $ export DATABASE_URL=postgres://postgres@localhost:5432/postgres
- $ cargo run
-warning: unused manifest key: package.Authors
-    Finished dev [unoptimized + debuginfo] target(s) in 0.08s
-     Running `target/debug/rust-sqlx`
+
+You’ll see records being added. Once the table exceeds 10 rows, the program will begin
+deleting one row for each new insert.
+
+### Sample Output
+
+```text
 ----- 1
 ----- 2
 ----- 3: Record { id: 1 }
@@ -41,5 +61,6 @@ warning: unused manifest key: package.Authors
 [User { id: 1, name: "Attila the long dead Hun:1", role: User }]
 ```
 
-That's it.  If you run again you will see more rows added to the table. When the row count is
-greater than 10 it will delete 1 row for each row added.
+If you run again you will see more rows added to the table. When the row count is greater
+than 10 it will delete 1 row for each row added.
+
