@@ -30,7 +30,7 @@ Then, from another shell window, exec into the database container and initialize
 docker exec -i postgres psql --username=postgres < db-init.sql
 ```
 
-Set the `DATABASE_URL` environment variable and run the application:
+Back in the first shell window, set the `DATABASE_URL` environment variable and run the application:
 
 ```bash
 export DATABASE_URL=postgres://postgres@localhost:5432/postgres
